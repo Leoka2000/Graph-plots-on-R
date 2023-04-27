@@ -85,31 +85,28 @@ summary(glht(res.aov2, linfct = mcp(Condition = "Tukey")))
 #The key difference between a vector and other data types in R Studio is that a vector can only hold values of the same data type.
 age_order <- c("3 Months", "6 Months", "12 Months")
 
+
 CD13$Age <- factor(CD13$Age, levels = age_order)
-
 df1 <- summarySE(CD13, measurevar = "CD13AREA", groupvars = c("Condition", "Age"))
-
-df1 <- df1 %>% rename(`CD13 Area` = CD13AREA)
 
 df2 <- summarySE(CD13, measurevar = "CD31AREA", groupvars = c("Condition", "Age"))
 
-df2 <- df2 %>% rename(`CD31 Area` = CD31AREA)
 
 df3 <- summarySE(CD13, measurevar = "Ratio", groupvars = c("Condition", "Age"))
 
-ggplot(data = df1, aes(x = Age, y = `CD13 Area`, fill = Condition)) + 
+ggplot(data = df1, aes(x = Age, y = CD13AREA, fill = Condition)) + 
   geom_bar(stat = "identity", position = position_dodge(), colour = "black") +
-  geom_errorbar(aes(ymin = `CD13 Area` - se, ymax = `CD13 Area` + se), 
+  geom_errorbar(aes(ymin = CD13AREA - se, ymax = CD13AREA + se), 
                 colour = "black", width = 0.1, position = position_dodge(0.9)) +
-  ylab("CD13 Area") +
+  ylab("CD13AREA") +
   scale_fill_manual(values = cbbPalette1) + 
   max.theme
 
-ggplot(data = df2, aes(x = Age, y = `CD31 Area`, fill = Condition)) + 
+ggplot(data = df2, aes(x = Age, y = CD31AREA, fill = Condition)) + 
   geom_bar(stat = "identity", position = position_dodge(), colour = "black") +
-  geom_errorbar(aes(ymin = `CD31 Area` - se, ymax = `CD31 Area` + se), 
+  geom_errorbar(aes(ymin = CD31AREA - se, ymax = CD31AREA + se), 
                 colour = "black", width = 0.1, position = position_dodge(0.9)) +
-  ylab("CD31 Area") +
+  ylab("CD31AREA") +
   scale_fill_manual(values = cbbPalette1) + 
   max.theme
 
@@ -120,6 +117,23 @@ ggplot(data = df3, aes(x = Age, y = Ratio, fill = Condition)) +
   ylab("Ratio") +
   scale_fill_manual(values = cbbPalette1) + 
   max.theme
+#ggplot(data=subset(df2, Condition=="Tg"), aes(x=interaction(Condition, Sex), y= RATIO, fill=Age)) + 
+# geom_bar(stat="identity", position=position_dodge(), colour="black") +
+#  geom_errorbar(aes(ymin=RATIO-se, ymax=RATIO+se), colour="black", width=.1,  position=position_dodge(.9)) +
+# ylab("RATIO") +
+#  scale_fill_manual(values=cbbPalette1) + 
+#  max.theme
+
+# Leo TO DO
+# rearrange graph to 3,6, 12
+# rearrange WT and then Tg
+
+# repeat the above code for Suzie and Sandrines data
+
+
+
+
+## STATS
 
 Gen_Age<- interaction(my_data2$Condition, my_data2$Age)
 
